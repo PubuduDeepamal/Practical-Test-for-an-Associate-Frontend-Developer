@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Task 1 Part 2</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <style type="text/css">
+        body {
+            background-color: black;
+        }
+
+        .slider {
+            margin-top: 10%;
+        }
+
+        .slider img {
+            display: none;
+        }
+
+        .slider img.active {
+            display: block;
+            border: 2px solid white;
+        }
+    </style>
+
+</head>
+<body>
+    <center>
+        <div class="slider">
+            <img src="images/1.png">
+            <img src="images/2.png">
+
+        </div>
+
+        <br><br>
+        <input type="button" class="btn btn-primary" onclick="changeSlide('previous')" value="Previous">
+        <input type="button" class="btn btn-primary" onclick="changeSlide('next')" value="Next">
+    </center>
+
+    <script
+            src="http://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var stopSlideshow = false;
+
+        function slideshow(caller) {
+            var status = $(caller).attr('value');
+
+            if (status.indexOf('Start') > -1) {
+                stopSlideshow = false;
+                $(caller).attr('value', 'Stop Slideshow');
+                $(caller).addClass('btn-danger').removeClass('btn-success');
+            } else {
+                stopSlideshow = true;
+                $(caller).attr('value', 'Start Slideshow');
+                $(caller).addClass('btn-success').removeClass('btn-danger');
+            }
+
+            var interval = setInterval(function () {
+                if (!stopSlideshow)
+                    changeSlide('next');
+                else
+                    clearInterval(interval);
+            }, 2000);
+        }
+
+        function changeSlide(direction) {
+            var currentImg = $('.active');
+            var nextImg = currentImg.next();
+            var previousImg = currentImg.prev();
+
+            if (direction == 'next') {
+                if (nextImg.length)
+                    nextImg.addClass('active');
+                else
+                    $('.slider img').first().addClass('active');
+            } else {
+                if (previousImg.length)
+                    previousImg.addClass('active');
+                else
+                    $('.slider img').last().addClass('active');
+            }
+
+            currentImg.removeClass('active');
+        }
+    </script>
+</body>
+</html>
